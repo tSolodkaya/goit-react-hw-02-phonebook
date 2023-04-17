@@ -4,6 +4,7 @@ import Filter from 'components/Filter/Filter';
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import Notiflix from 'notiflix';
+import css from './App.module.css';
 
 export class App extends Component {
   state = {
@@ -16,9 +17,9 @@ export class App extends Component {
     filter: '',
   };
 
-  addContact = ({ name, phone }) => {
+  addContact = ({ name, number }) => {
     const isContactInBook = this.state.contacts.some(
-      conact => contact.name.toLowerCase() === name.toLowerCase()
+      contact => contact.name.toLowerCase() === name.toLowerCase()
     );
 
     if (isContactInBook) {
@@ -29,7 +30,7 @@ export class App extends Component {
 
     const contact = {
       name,
-      phone,
+      number,
       id: contactId,
     };
 
@@ -56,25 +57,17 @@ export class App extends Component {
       return contact.name.toLowerCase().includes(normilizedFilter);
     });
     return (
-      <div
-      // style={{
-      //   height: '100vh',
-      //   justifyContent: 'center',
-      //   alignItems: 'center',
-      //   fontSize: 40,
-      //   color: '#010101',
-      // }}
-      >
+      <div className={css.container}>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
         <Filter
           nameForFind={this.state.filter}
           onFilter={this.handleFilterContacts}
         />
-        <h2>Contact List: </h2>
+        <h2>Contact List </h2>
         <ContactList
           contacts={visibleContacts}
-          deleteContact={this.handelDeleteContact}
+          deleteFn={this.handelDeleteContact}
         />
       </div>
     );
